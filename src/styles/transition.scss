@@ -1,0 +1,58 @@
+// See https://staging-cn.vuejs.org/guide/built-ins/transition.html for detail
+
+// fade-transform
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.5s;
+}
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+// sidebar-logo-fade
+.sidebar-logo-fade-enter-active,
+.sidebar-logo-fade-leave-active {
+  transition: opacity 1.5s;
+}
+.sidebar-logo-fade-enter-from,
+.sidebar-logo-fade-leave-to {
+  opacity: 0;
+}
+
+/* 过渡动效----幻灯片 */
+.slideLeft-enter-active,
+.slideLeft-leave-active {
+  transition: all 0.50s ease-out;
+}
+.slideLeft-enter-to {
+  position: absolute;
+  right: 0;
+}
+.slideLeft-enter-from {
+  position: absolute;
+  right: -100%;
+}
+.slideLeft-leave-to {
+  position: absolute;
+  left: -100%;
+}
+.slideLeft-leave-from {
+  position: absolute;
+  left: 0;
+}
+
+/* 过渡动效----缩放 */
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.3s ease;
+}
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
