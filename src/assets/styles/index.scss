@@ -2,7 +2,8 @@
 @import "./variables.css";
 // Transition
 @import "./transition.scss";
-// 注册多主题
+// 工具函数
+@import "./tools.scss";
 
 // 业务页面几乎都应该在根元素上挂载 class="app-container"，以保持页面美观
 .app-container {

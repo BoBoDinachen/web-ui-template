@@ -1,0 +1,10 @@
+$vm_base: 1920;
+$vh_base: 1080;
+
+@function vw($px) {
+  @return calc($px / $vm_base) * 100vw;
+}
+
+@function vh($px) {
+  @return calc($px / $vh_base) * 100vh;
+}

@@ -6,11 +6,11 @@ import "@/router/permission"
 import stores from "@/stores/index"
 
 // load
-import { loadSvg } from "@/icons"
+import { loadSvg } from "@/assets/icons"
 
 // css
 import "normalize.css"
-import "@/styles/index.scss"
+import "@/assets/styles/index.scss"
 
 const app = createApp(App)
 

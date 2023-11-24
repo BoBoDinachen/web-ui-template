@@ -64,7 +64,7 @@ const handleClickOutside = () => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/styles/mixins.scss";
+@import "@/assets/styles/mixins.scss";
 
 .app-wrapper {
     @include clearfix;
@@ -100,6 +100,8 @@ const handleClickOutside = () => {
 .sidebar-container {
     transition: width 0.28s;
     width: var(--v3-sidebar-width) !important;
+    color: #ffff;
+    background-color: #001428;
     height: 100%;
     position: fixed;
     top: 0;

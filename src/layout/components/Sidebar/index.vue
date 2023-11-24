@@ -1,21 +1,26 @@
 <script lang="ts" setup>
-import { Component, computed, h } from "vue"
-import { useRoute } from "vue-router"
+import { computed, h } from "vue"
+import { useRoute, RouteRecordRaw } from "vue-router"
 import { storeToRefs } from "pinia"
 import { useAppStore } from "@/stores/modules/app"
 import { usePermissionStore } from "@/stores/modules/permission"
 import { useSettingsStore } from "@/stores/modules/settings"
 import { NIcon, NMenu, NScrollbar, NLayoutSider } from "naive-ui"
 import type { MenuOption } from "naive-ui"
-import { BookOutline as BookIcon, PersonOutline as PersonIcon, WineOutline as WineIcon } from "@vicons/ionicons5"
+import { BookmarkOutline, CaretDownOutline } from "@vicons/ionicons5"
+import SvgIcon from "@/components/SvgIcon/index.vue" // Svg Component
 
-import SidebarItem from "./SidebarItem.vue"
 import SidebarLogo from "./SidebarLogo.vue"
 import { getCssVariableValue } from "@/utils"
+import { RouterLink } from "vue-router"
 
 const v3SidebarMenuBgColor = getCssVariableValue("--v3-sidebar-menu-bg-color")
-const v3SidebarMenuTextColor = getCssVariableValue("--v3-sidebar-menu-text-color")
-const v3SidebarMenuActiveTextColor = getCssVariableValue("--v3-sidebar-menu-active-text-color")
+const v3SidebarMenuTextColor = getCssVariableValue(
+  "--v3-sidebar-menu-text-color",
+)
+const v3SidebarMenuActiveTextColor = getCssVariableValue(
+  "--v3-sidebar-menu-active-text-color",
+)
 
 const route = useRoute()
 const appStore = useAppStore()
@@ -25,49 +30,80 @@ const settingsStore = useSettingsStore()
 const { showSidebarLogo } = storeToRefs(settingsStore)
 
 const activeMenu = computed(() => {
-    const { meta, path } = route
-    if (meta?.activeMenu) {
-        return meta.activeMenu
-    }
-    return path
+  const { meta, path } = route
+  if (meta?.activeMenu) {
+    return meta.activeMenu
+  }
+  return path
 })
 
 const isCollapse = computed(() => {
-    return !appStore.sidebar.opened
+  return !appStore.sidebar.opened
 })
 
-function renderIcon(icon: Component) {
-    return () => h(NIcon, null, { default: () => h(icon) })
+function renderIcon(icon: string) {
+  return () => h(SvgIcon, { name: icon })
+}
+
+function renderLabel(route: RouteRecordRaw) {
+  return () =>
+    h(
+      RouterLink,
+      {
+        to: {
+          name: route.name,
+        },
+      },
+      { default: () => route.meta?.title },
+    )
 }
 
 //* 侧边栏菜单数据
 const MenuOptions = computed<MenuOption[]>(() => {
-    return [
-        {
-            label: "且听风吟",
-            key: "hear-the-wind-sing",
-            icon: renderIcon(BookIcon),
-        },
-        {
-            label: "1973年的弹珠玩具",
-            key: "pinball-1973",
-            icon: renderIcon(BookIcon),
-            children: [
-                {
-                    label: "鼠",
-                    key: "rat",
-                },
-            ],
-        },
-    ]
+  function modifyRouteAttributes(routeList: Array<RouteRecordRaw>) {
+    return routeList.map((route) => {
+      if (route.children && route.children?.length == 1) {
+        route = route.children[0]
+      }
+      // 在这里修改需要的属性
+      const modifiedRoute = {
+        ...route,
+        // 修改其他属性
+        label: renderLabel(route),
+        key: route.meta?.activeMenu || route.path,
+        icon: route.meta?.svgIcon && renderIcon(route.meta?.svgIcon),
+        show: !route.meta?.hidden,
+      }
+      // 如果有子路由，递归调用该函数
+      if (modifiedRoute.children && modifiedRoute.children.length > 0) {
+        modifiedRoute.children = modifyRouteAttributes(modifiedRoute.children)
+      }
+      return modifiedRoute
+    })
+  }
+  const modifiedRoutes = modifyRouteAttributes(permissionStore.routes)
+  return modifiedRoutes as MenuOption[]
 })
+
+function expandIcon() {
+  return h(NIcon, null, { default: () => h(CaretDownOutline) })
+}
 </script>
 
 <template>
-    <div :class="{ 'has-logo': showSidebarLogo }">
-        <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
-        <NMenu :collapsed="isCollapse" :collapsed-width="64" :collapsed-icon-size="22" :options="MenuOptions"></NMenu>
-        <!-- <el-scrollbar
+  <div :class="{ 'has-logo': showSidebarLogo }">
+    <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
+    <NMenu
+      :collapsed="isCollapse"
+      show-trigger
+      :inverted="true"
+      :collapsed-width="80"
+      :collapsed-icon-size="22"
+      :options="MenuOptions"
+      :value="activeMenu"
+      :expand-icon="expandIcon"
+    ></NMenu>
+    <!-- <el-scrollbar
             wrap-class="scrollbar-wrapper"
             :collapsed-width="64"
             :collapsed-icon-size="22"
@@ -92,81 +128,25 @@ const MenuOptions = computed<MenuOption[]>(() => {
                 />
             </el-menu>
         </el-scrollbar> -->
-    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @mixin tip-line {
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 2px;
-        height: 100%;
-        background-color: var(--v3-sidebar-menu-tip-line-bg-color);
-    }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-color: var(--v3-sidebar-menu-tip-line-bg-color);
+  }
 }
 
 .has-logo {
-    .el-scrollbar {
-        height: calc(100% - var(--v3-header-height));
-    }
-}
-
-.el-scrollbar {
-    height: 100%;
-    :deep(.scrollbar-wrapper) {
-        // 限制水平宽度
-        overflow-x: hidden !important;
-        .el-scrollbar__view {
-            height: 100%;
-        }
-    }
-    // 滚动条
-    :deep(.el-scrollbar__bar) {
-        &.is-horizontal {
-            // 隐藏水平滚动条
-            display: none;
-        }
-    }
-}
-
-.el-menu {
-    border: none;
-    min-height: 100%;
-    width: 100% !important;
-}
-
-:deep(.el-menu-item),
-:deep(.el-sub-menu__title),
-:deep(.el-sub-menu .el-menu-item) {
-    height: var(--v3-sidebar-menu-item-height);
-    line-height: var(--v3-sidebar-menu-item-height);
-    &.is-active,
-    &:hover {
-        background-color: var(--v3-sidebar-menu-hover-bg-color);
-    }
-    display: block;
-    * {
-        vertical-align: middle;
-    }
-}
-
-:deep(.el-menu-item) {
-    &.is-active {
-        @include tip-line;
-    }
-}
-
-.el-menu--collapse {
-    :deep(.el-sub-menu) {
-        &.is-active {
-            .el-sub-menu__title {
-                color: var(--v3-sidebar-menu-active-text-color) !important;
-                @include tip-line;
-            }
-        }
-    }
+  .el-scrollbar {
+    height: calc(100% - var(--v3-header-height));
+  }
 }
 </style>

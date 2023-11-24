@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { format } from "date-fns"
 import { useUserStore } from "@/stores/modules/user"
 import { ThemeName, useTheme } from "@/hooks/useTheme"
 
@@ -10,7 +9,7 @@ const router = useRouter()
 const { activeThemeName } = useTheme()
 
 const loginTime = computed(() => {
-    return format(new Date(), "yyyy年MM月dd日 HH:mm:ss")
+    return "2023年11月23日"
 })
 // 卡片的背景颜色
 const cardBackgroundColor = computed(() => {

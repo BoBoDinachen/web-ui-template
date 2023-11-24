@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type PropType, computed, ref, watch, nextTick } from "vue"
+import { type PropType, computed, ref, watch, nextTick, onMounted } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { NIcon, NScrollbar } from "naive-ui"
 import { ChevronBack as LeftIcon, ChevronForward as RightIcon } from "@vicons/ionicons5"
@@ -25,8 +25,9 @@ let currentScrollLeft = 0
 const translateDistance = 200
 
 /** 滚动时触发 */
-const scroll = ({ scrollLeft }: { scrollLeft: number }) => {
-    currentScrollLeft = scrollLeft
+const scroll = (e:Event) => {
+    console.log("scroll: ",e);
+    //currentScrollLeft = scrollLeft
 }
 
 /** 鼠标滚轮滚动时触发 */
@@ -43,7 +44,7 @@ const getWidth = () => {
     /** 可滚动内容的长度 */
     const scrollbarContentRefWidth = scrollbarContentRef.value!.clientWidth
     /** 滚动可视区宽度 */
-    const scrollbarRefWidth = scrollbarRef.value!.wrapRef!.clientWidth
+    const scrollbarRefWidth = scrollbarRef.value!.scrollbarInstRef!.containerRef!.clientWidth
     /** 最后剩余可滚动的宽度 */
     const lastDistance = scrollbarContentRefWidth - scrollbarRefWidth - currentScrollLeft
 
@@ -61,7 +62,7 @@ const scrollTo = (direction: "left" | "right", distance: number = translateDista
     } else {
         scrollLeft = Math.min(currentScrollLeft + distance, currentScrollLeft + lastDistance)
     }
-    scrollbarRef.value!.setScrollLeft(scrollLeft)
+    scrollbarRef.value!.scrollBy({left:scrollLeft})
 }
 
 /** 移动到目标位置 */
@@ -127,6 +128,7 @@ const showScreenfull = computed(() => {
 <style lang="scss" scoped>
 .scroll-container {
     height: 100%;
+    padding: 0 vw(10) 0;
     user-select: none;
     display: flex;
     justify-content: space-between;
