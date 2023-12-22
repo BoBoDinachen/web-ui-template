@@ -5,7 +5,7 @@ import { type ITagView, useTagsViewStore } from "@/stores/modules/tags-view"
 import { usePermissionStore } from "@/stores/modules/permission"
 import ScrollPane from "./ScrollPane.vue"
 import path from "path-browserify"
-import { NIcon } from "naive-ui"
+import { NIcon,useThemeVars } from "naive-ui"
 import { Close as CloseIcon } from "@vicons/ionicons5"
 
 const instance = getCurrentInstance()
@@ -13,6 +13,7 @@ const router = useRouter()
 const route = useRoute()
 const tagsViewStore = useTagsViewStore()
 const permissionStore = usePermissionStore()
+const themeVar = useThemeVars()
 
 const tagRefs = ref<InstanceType<typeof RouterLink>[]>([])
 
@@ -194,8 +195,8 @@ onMounted(() => {
 .tags-view-container {
     height: var(--v3-tagsview-height);
     width: 100%;
-    background-color: #fff;
-    border-bottom: 1px solid #d8dce5;
+    background-color: v-bind('themeVar.bodyColor');
+    border-bottom: 1px solid v-bind('themeVar.borderColor');
     box-shadow: 0 1px 3px 0 #00000010, 0 0 3px 0 #00000010;
     .tags-view-wrapper {
         .tags-view-item {
@@ -204,10 +205,10 @@ onMounted(() => {
             cursor: pointer;
             height: 26px;
             line-height: 26px;
-            border: 1px solid var(--v3-tagsview-tag-border-color);
+            border: 1px solid v-bind('themeVar.borderColor');
             border-radius: var(--v3-tagsview-tag-border-radius);
-            color: var(--v3-tagsview-tag-text-color);
-            background-color: var(--v3-tagsview-tag-bg-color);
+            color: v-bind('themeVar.textColor2');
+            background-color: v-bind('themeVar.bodyColor');
             padding: 0 8px;
             font-size: 12px;
             margin-left: 5px;
@@ -219,12 +220,12 @@ onMounted(() => {
                 margin-right: 5px;
             }
             &.active {
-                background-color: var(--v3-tagsview-tag-active-bg-color);
-                color: var(--v3-tagsview-tag-active-text-color);
-                border-color: var(--v3-tagsview-tag-active-border-color);
+                background-color:v-bind('themeVar.modalColor');
+                color: v-bind('themeVar.primaryColor');
+                border-color: v-bind('themeVar.primaryColor');
                 &::before {
                     content: "";
-                    background-color: var(--v3-tagsview-tag-active-before-color);
+                    background-color: v-bind('themeVar.primaryColor');
                     display: inline-block;
                     width: 8px;
                     height: 8px;
@@ -238,15 +239,16 @@ onMounted(() => {
                 vertical-align: middle;
                 border-radius: 50%;
                 &:hover {
-                    background-color: var(--v3-tagsview-tag-icon-hover-bg-color);
-                    color: var(--v3-tagsview-tag-icon-hover-color);
+                    background-color: v-bind('themeVar.iconColor');
+                    color: v-bind('themeVar.hoverColor');
                 }
             }
         }
     }
     .contextmenu {
         margin: 0;
-        background-color: #fff;
+        background-color: v-bind('themeVar.modalColor');
+        border: 1px solid v-bind('themeVar.borderColor');
         z-index: 3000;
         position: absolute;
         list-style-type: none;
@@ -254,14 +256,12 @@ onMounted(() => {
         border-radius: 4px;
         font-size: 12px;
         font-weight: 400;
-        color: #333;
-        box-shadow: 2px 2px 3px 0 #00000030;
         li {
             margin: 0;
             padding: 7px 16px;
             cursor: pointer;
             &:hover {
-                background-color: #eee;
+                background-color: v-bind('themeVar.hoverColor');
             }
         }
     }

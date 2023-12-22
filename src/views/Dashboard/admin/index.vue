@@ -6,7 +6,7 @@ import { ThemeName, useTheme } from "@/hooks/useTheme"
 
 const userStore = useUserStore()
 const router = useRouter()
-const { activeThemeName } = useTheme()
+const { activeThemeName,themeVar } = useTheme()
 
 const loginTime = computed(() => {
     return "2023年11月23日"
@@ -33,7 +33,7 @@ const titleColor = computed(() => {
             <!-- 顶部横幅 -->
             <div class="left-header-warp">
                 <span class="title">快速开始</span>
-                <span class="text">管理员可以管理自己的团队/家庭，并审核自己团队/家庭内所有物品的放置和移除</span>
+                <span class="text"></span>
             </div>
             <!-- 内容区域1- 数据统计 -->
             <div class="left-content-warp-first">
@@ -121,7 +121,7 @@ $content-padding: 25px;
         gap: 15px;
         flex: 1;
         border-radius: $radius;
-        background-color: v-bind(cardBackgroundColor);
+        background-color: v-bind('themeVar.cardColor');
         padding: $content-padding;
         .content-header {
             display: flex;
@@ -157,9 +157,9 @@ $content-padding: 25px;
             gap: 10px;
             height: 100px;
             border-radius: $radius;
-            color: #ffff;
+            color: v-bind('themeVar.textColor1');
             text-align: left;
-            background-color: #3d89f8;
+            background-color: v-bind('themeVar.cardColor');
             background-size: 200px 200px;
             background-position: right center;
             background-repeat: no-repeat;
@@ -190,7 +190,8 @@ $content-padding: 25px;
             height: 100px;
             gap: 10px;
             border-radius: $radius;
-            background-color: #3d89f8;
+            background-color: v-bind('themeVar.cardColor');
+            color: v-bind('themeVar.textColor1');
             box-sizing: border-box;
             .header-cover {
                 width: 100px;
@@ -200,7 +201,6 @@ $content-padding: 25px;
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                color: #ffff;
                 margin-left: 10px;
                 @include header-warp-text();
             }

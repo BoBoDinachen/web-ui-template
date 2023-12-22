@@ -140,7 +140,6 @@ function expandIcon() {
     left: 0;
     width: 2px;
     height: 100%;
-    background-color: var(--v3-sidebar-menu-tip-line-bg-color);
   }
 }
 

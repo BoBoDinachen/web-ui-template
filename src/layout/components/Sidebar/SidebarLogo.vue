@@ -32,6 +32,7 @@ const props = defineProps({
   line-height: var(--v3-header-height);
   overflow: hidden;
   white-space: nowrap;
+  color: white;
   img {
     width: auto;
     height: 40px;

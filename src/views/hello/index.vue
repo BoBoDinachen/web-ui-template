@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NResult } from "naive-ui"
+import { NResult, NButton } from "naive-ui"
 </script>
 <template>
   <n-result

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue"
-import { NIcon, NDrawer, NDrawerContent } from "naive-ui"
+import { NIcon, NDrawer, NDrawerContent,useThemeVars } from "naive-ui"
 import { SettingsOutline as SettingIcon } from "@vicons/ionicons5"
 
 const props = defineProps({
@@ -13,7 +13,7 @@ const props = defineProps({
         default: "标题"
     }
 })
-
+const themeVar = useThemeVars()
 const buttonTopCss = props.buttonTop + "px"
 const show = ref(false)
 </script>
@@ -33,7 +33,7 @@ const show = ref(false)
 .handle-button {
     width: 48px;
     height: 48px;
-    background-color: var(--v3-rightpanel-button-bg-color);
+    background-color: v-bind('themeVar.iconColor');
     position: fixed;
     top: v-bind(buttonTopCss);
     right: 0px;

@@ -4,7 +4,7 @@ import { useRouter } from "vue-router"
 import { useAppStore } from "@/stores/modules/app"
 import { useSettingsStore } from "@/stores/modules/settings"
 import { useUserStore } from "@/stores/modules/user"
-import { NDropdown, NIcon, NAvatar } from "naive-ui"
+import { NDropdown, NIcon, NAvatar,useThemeVars } from "naive-ui"
 import type { DropdownOption } from "naive-ui"
 import Breadcrumb from "../Breadcrumb/index.vue"
 import Hamburger from "../Hamburger/index.vue"
@@ -16,6 +16,7 @@ const router = useRouter()
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
 const userStore = useUserStore()
+const themeVar = useThemeVars()
 
 //* 下来菜单选项
 const DropdownOptions = ref<DropdownOption[]>([
@@ -104,7 +105,6 @@ function handleClickDropdownItem(key: number, option: DropdownOption) {
         <div class="right-menu-avatar">
           <n-avatar
             round
-            size="large"
             src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
           ></n-avatar>
           <span>{{ userStore.userName }}</span>
@@ -118,7 +118,8 @@ function handleClickDropdownItem(key: number, option: DropdownOption) {
 .navigation-bar {
   height: var(--v3-navigationbar-height);
   overflow: hidden;
-  background: #fff;
+  background: v-bind('themeVar.bodyColor');
+  border-bottom: 1px dashed v-bind('themeVar.borderColor');
   .hamburger {
     display: flex;
     align-items: center;
@@ -140,7 +141,6 @@ function handleClickDropdownItem(key: number, option: DropdownOption) {
     height: 100%;
     display: flex;
     align-items: center;
-    color: #606266;
     gap: vw(15);
     .right-menu-item {
       padding: 0 5px;

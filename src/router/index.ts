@@ -106,6 +106,16 @@ export const constantRoutes: RouteRecordRaw[] = [
           activeMenu:"Exmaple2",
         },
       },
+      {
+        path: "3",
+        component: () => import("@/views/example/example3.vue"),
+        name: "Exmaple3",
+        meta: {
+          title: "地图开发",
+          svgIcon: "menus-earth",
+          activeMenu:"Exmaple3",
+        },
+      },
     ],
   },
 ]

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 import { useRoute } from "vue-router"
+import { useThemeVars } from "naive-ui";
 import { useTagsViewStore } from "@/stores/modules/tags-view"
 
 const route = useRoute()
 const tagsViewStore = useTagsViewStore()
 
+const themeVars = useThemeVars()
 const key = computed(() => {
   return route.path
 })
@@ -29,7 +31,7 @@ const key = computed(() => {
   width: 100%;
   position: relative;
   overflow: hidden;
-  background-color: var(--v3-body-bg-color);
+  background-color: v-bind('themeVars.modalColor');
 }
 
 .fixed-header + .app-main {
