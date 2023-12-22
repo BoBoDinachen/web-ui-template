@@ -240,7 +240,6 @@ onMounted(() => {
                 border-radius: 50%;
                 &:hover {
                     background-color: v-bind('themeVar.iconColor');
-                    color: v-bind('themeVar.hoverColor');
                 }
             }
         }
@@ -261,6 +260,7 @@ onMounted(() => {
             padding: 7px 16px;
             cursor: pointer;
             &:hover {
+                color: v-bind('themeVar.textColor1') !important;
                 background-color: v-bind('themeVar.hoverColor');
             }
         }
