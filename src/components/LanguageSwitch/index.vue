@@ -32,7 +32,7 @@ const DropdownOption = computed<DropdownOption[]>(() => {
         <template #trigger>
           <NButton quaternary>
             <template #icon>
-              <NIcon size="25">
+              <NIcon size="20">
                 <LanguageIcon></LanguageIcon>
               </NIcon>
             </template>

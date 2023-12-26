@@ -31,7 +31,7 @@ const DropdownOption = computed<DropdownOption[]>(() => {
           <NButton quaternary >
             <template #icon>
               <NIcon
-                size="25"
+                size="20"
               >
                 <ColorPaletteIcon></ColorPaletteIcon>
               </NIcon>

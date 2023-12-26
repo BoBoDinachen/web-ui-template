@@ -30,7 +30,7 @@ const key = computed(() => {
   min-height: calc(100vh - var(--v3-navigationbar-height));
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow: hidden !important;
   background-color: v-bind('themeVars.modalColor');
 }
 

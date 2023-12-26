@@ -141,7 +141,6 @@ function handleClickDropdownItem(key: number, option: DropdownOption) {
     height: 100%;
     display: flex;
     align-items: center;
-    gap: vw(15);
     .right-menu-item {
       padding: 0 5px;
       cursor: pointer;
@@ -153,11 +152,12 @@ function handleClickDropdownItem(key: number, option: DropdownOption) {
       cursor: pointer;
       display: flex;
       align-items: center;
+      margin-left: vw(20);
       .n-avatar {
-        margin-right: 10px;
+        margin-right: vw(10);
       }
       span {
-        font-size: 16px;
+        font-size: vw(16);
       }
     }
   }

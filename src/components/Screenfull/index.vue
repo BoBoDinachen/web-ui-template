@@ -49,7 +49,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div @click="click" style="position: relative; width: 40px; height: 25px">
+  <div @click="click" style="position: relative;">
     <n-tooltip placement="bottom" trigger="hover">
       <template #trigger>
         <n-button quaternary>
